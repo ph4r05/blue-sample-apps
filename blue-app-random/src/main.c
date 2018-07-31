@@ -51,6 +51,7 @@ static void ui_approval(void);
 #define CLA 0x80
 #define INS_SIGN 0x02
 #define INS_GET_PUBLIC_KEY 0x04
+#define INS_RANDOM 0x05
 #define P1_LAST 0x80
 #define P1_MORE 0x00
 
@@ -543,6 +544,12 @@ static void sample_main(void) {
                     THROW(0x9000);
                 } break;
 
+                case INS_RANDOM: {
+                    cx_rng(G_io_apdu_buffer, 250);
+                    tx = 250;
+                    THROW(0x9000);
+                } break;
+
                 case 0xFF: // return to dashboard
                     goto return_to_dashboard;
 
@@ -714,7 +721,7 @@ __attribute__((section(".boot"))) int main(void) {
             io_seproxyhal_init();
 
             // Create the private key if not initialized
-            if (N_initialized != 0x01) {
+            if (0 && N_initialized != 0x01) {
                 unsigned char canary;
                 cx_ecfp_private_key_t privateKey;
                 cx_ecfp_public_key_t publicKey;
