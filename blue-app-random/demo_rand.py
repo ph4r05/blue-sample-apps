@@ -30,11 +30,12 @@ while True:
 		entropy = dongle.exchange(binascii.unhexlify(b'8005000000'))
 		sys.stderr.buffer.write(entropy)
 		cur += len(entropy)
-		if cur - last_rep > 1024*32:
+		if cur - last_rep > 1024*128:
 			print('So far %s B = %s kB = %s MB' % (cur, cur//1024, int(cur/1024./1024.)))
 			print(binascii.hexlify(entropy).decode('ascii'))
 			print(' ')
 			last_rep = cur
+			sys.stderr.buffer.flush()
 
 	except CommException as comm:
 		if comm.sw == 0x6985:
