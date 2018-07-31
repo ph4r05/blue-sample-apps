@@ -21,7 +21,10 @@ See [Ledger's documentation](http://ledger.readthedocs.io) to get started.
 ```
 # BOLOS_ENV - just GCC is needed to setup
 # Download GCC to ~/bolos_env/
-export GCCPATH ~/bolos_env/gcc-arm-none-eabi-5_3-2016q1/bin
+export GCCPATH=~/bolos_env/gcc-arm-none-eabi-5_3-2016q1/bin
+
+# Download SDK for 1.4.2 https://github.com/LedgerHQ/nanos-secure-sdk/archive/nanos-1421.tar.gz
+export BOLOS_SDK=~/bolos_sdk/nanos-secure-sdk-nanos-1421/
 
 sudo apt install libusb-1.0.0-dev libudev-dev
 sudo apt install python3 python3-dev python3-pip python3-venv
