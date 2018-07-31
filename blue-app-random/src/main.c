@@ -545,8 +545,8 @@ static void sample_main(void) {
                 } break;
 
                 case INS_RANDOM: {
-                    cx_rng(G_io_apdu_buffer, 250);
-                    tx = 250;
+                    cx_rng(G_io_apdu_buffer, 256);
+                    tx = 256;
                     THROW(0x9000);
                 } break;
 
