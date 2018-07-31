@@ -20,14 +20,21 @@ import binascii
 from ledgerblue.comm import getDongle
 from ledgerblue.commException import CommException
 
-dongle = getDongle(True)
+dongle = getDongle(False)  # debug flag
 
 # CLS | INS | P1 | P2 | LC
 cur = 0
+last_rep = 0
 while True:
 	try:
 		entropy = dongle.exchange(binascii.unhexlify(b'8005000000'))
 		sys.stderr.buffer.write(entropy)
+		cur += len(entropy)
+		if cur - last_rep > 1024*32:
+			print('So far %s B = %s kB = %s MB' % (cur, cur//1024, int(cur/1024./1024.)))
+			print(binascii.hexlify(entropy).decode('ascii'))
+			print(' ')
+			last_rep = cur
 
 	except CommException as comm:
 		if comm.sw == 0x6985:
