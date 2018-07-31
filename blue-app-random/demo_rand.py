@@ -16,6 +16,7 @@
 #*  limitations under the License.
 #********************************************************************************
 import sys
+import binascii
 from ledgerblue.comm import getDongle
 from ledgerblue.commException import CommException
 
@@ -25,8 +26,9 @@ dongle = getDongle(True)
 cur = 0
 while True:
 	try:
-		entropy = dongle.exchange(bytes("8005000000".decode('hex')))
-		sys.stdout.write(entropy)
+		entropy = dongle.exchange(binascii.unhexlify(b'8005000000'))
+		sys.stderr.buffer.write(entropy)
+
 	except CommException as comm:
 		if comm.sw == 0x6985:
 			print("Aborted by user")
